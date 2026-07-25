@@ -5,12 +5,9 @@ function percentChange(current, previous) {
 }
 
 function calculateReturn(candles, days) {
-
     const current = candles.at(-1).close;
     const previous = candles.at(-(days + 1)).close;
-
     return percentChange(current, previous);
-
 }
 
 function calculatePeriod(stockCandles, spyCandles, days) {
@@ -26,13 +23,22 @@ function calculatePeriod(stockCandles, spyCandles, days) {
 
 }
 
-export async function calculateRelativeStrength(symbol, env) {
+export async function getSpyHistory(env) {
+
+    const response = await getHistory("SPY", env);
+    return await response.json();
+
+}
+
+export async function calculateRelativeStrength(symbol, env, spyHistory = null) {
 
     const stockResponse = await getHistory(symbol, env);
-    const spyResponse = await getHistory("SPY", env);
 
     const stock = await stockResponse.json();
-    const spy = await spyResponse.json();
+
+    const spy =
+        spyHistory ??
+        await getSpyHistory(env);
 
     return {
 

@@ -1,13 +1,19 @@
 import { watchlists } from "./watchlists.js";
-import { calculateRelativeStrength } from "./engines/relativeStrengthEngine.js";
+
+import {
+    calculateRelativeStrength,
+    getSpyHistory
+} from "./engines/relativeStrengthEngine.js";
 
 export async function scanRSHandler(request, env) {
 
     const url = new URL(request.url);
 
-    const name = url.searchParams.get("watchlist");
+    const name =
+        url.searchParams.get("watchlist");
 
-    const symbols = watchlists[name];
+    const symbols =
+        watchlists[name];
 
     if (!symbols) {
 
@@ -18,18 +24,25 @@ export async function scanRSHandler(request, env) {
 
     }
 
-    const results = [];
+    const spy =
+        await getSpyHistory(env);
 
-    for (const symbol of symbols) {
+    const promises =
+        symbols.map(symbol =>
+            calculateRelativeStrength(
+                symbol,
+                env,
+                spy
+            )
+        );
 
-        const rs = await calculateRelativeStrength(symbol, env);
-
-        results.push(rs);
-
-    }
+    const results =
+        await Promise.all(promises);
 
     results.sort(
-        (a, b) => b["5Day"].vsSpy - a["5Day"].vsSpy
+        (a, b) =>
+            b["5Day"].vsSpy -
+            a["5Day"].vsSpy
     );
 
     return Response.json(results);
