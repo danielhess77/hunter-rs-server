@@ -13,7 +13,7 @@ export async function historyHandler(request, env) {
             return Response.json({ error: "Missing symbol" }, { status: 400 });
         }
 
-        const response = await getHistory(symbol, period, env);
+        const response = await getHistory(symbol, env);
 
         const text = await response.text();
 
