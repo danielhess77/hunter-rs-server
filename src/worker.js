@@ -23,6 +23,8 @@ import {
   getWatchlistsHandler
 } from "./watchlist.js";
 
+import { scanRSHandler } from "./scanRS.js";
+
 export default {
 
   async fetch(request, env) {
@@ -58,6 +60,9 @@ export default {
 
       case "/rs":
         return relativeStrengthHandler(request, env);
+
+      case "/scanRS":
+        return scanRSHandler(request, env);
 
       case "/watchlists":
         return getWatchlistsHandler(request, env);
