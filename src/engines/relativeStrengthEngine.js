@@ -1,5 +1,6 @@
 import { getHistory } from "../schwabClient.js";
 import { sectorMap } from "../sectors.js";
+import { calculateRSMomentum } from "./rsMomentumEngine.js";
 
 function percentChange(current, previous) {
 
@@ -146,6 +147,11 @@ export async function calculateRelativeStrength(
 
     }
 
+    output.momentum =
+    calculateRSMomentum(
+        output.benchmarks
+    );
+    
     return output;
 
 }
