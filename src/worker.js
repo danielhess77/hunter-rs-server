@@ -23,7 +23,9 @@ import {
   getWatchlistsHandler
 } from "./watchlist.js";
 
-import { scanRSHandler } from "./scanRS.js";
+import {
+  scanRSHandler
+} from "./scanRS.js";
 
 export default {
 
@@ -68,9 +70,12 @@ export default {
         return getWatchlistsHandler(request, env);
 
       default:
-        return jsonResponse({
-          error: "Not Found"
-        }, 404);
+        return jsonResponse(
+          {
+            error: "Not Found"
+          },
+          404
+        );
 
     }
 
