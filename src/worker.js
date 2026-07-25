@@ -15,6 +15,10 @@ import {
   jsonResponse
 } from "./utils.js";
 
+import {
+    getWatchlistsHandler
+} from "./watchlist.js";
+
 export default {
 
   async fetch(request, env) {
@@ -47,6 +51,9 @@ export default {
 
       case "/history":
         return historyHandler(request, env);
+
+      case "/watchlists":
+        return getWatchlistsHandler(request, env);
 
       default:
         return jsonResponse({
