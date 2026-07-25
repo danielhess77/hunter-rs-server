@@ -12,16 +12,16 @@ import {
 } from "./history.js";
 
 import {
+  relativeStrengthHandler
+} from "./relativeStrength.js";
+
+import {
   jsonResponse
 } from "./utils.js";
 
 import {
-    getWatchlistsHandler
+  getWatchlistsHandler
 } from "./watchlist.js";
-
-import {
-    relativeStrengthHandler
-} from "./relativeStrength.js";
 
 export default {
 
@@ -55,6 +55,9 @@ export default {
 
       case "/history":
         return historyHandler(request, env);
+
+      case "/rs":
+        return relativeStrengthHandler(request, env);
 
       case "/watchlists":
         return getWatchlistsHandler(request, env);
