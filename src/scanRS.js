@@ -2,7 +2,7 @@ import { watchlists } from "./watchlists.js";
 
 import {
     calculateRelativeStrength,
-    getSpyHistory
+    getBenchmarkHistory
 } from "./engines/relativeStrengthEngine.js";
 
 export async function scanRSHandler(request, env) {
@@ -24,15 +24,22 @@ export async function scanRSHandler(request, env) {
 
     }
 
-    const spy =
-        await getSpyHistory(env);
+    const benchmark =
+        "SPY";
+
+    const benchmarkHistory =
+        await getBenchmarkHistory(
+            benchmark,
+            env
+        );
 
     const promises =
         symbols.map(symbol =>
             calculateRelativeStrength(
                 symbol,
                 env,
-                spy
+                benchmarkHistory,
+                benchmark
             )
         );
 
@@ -41,8 +48,8 @@ export async function scanRSHandler(request, env) {
 
     results.sort(
         (a, b) =>
-            b["5Day"].vsSpy -
-            a["5Day"].vsSpy
+            b["5Day"].relativeStrength -
+            a["5Day"].relativeStrength
     );
 
     return Response.json(results);
