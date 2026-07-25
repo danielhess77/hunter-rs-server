@@ -1,5 +1,6 @@
 const AUTHORIZE_URL = "https://api.schwabapi.com/v1/oauth/authorize";
 const TOKEN_URL = "https://api.schwabapi.com/v1/oauth/token";
+const QUOTE_URL = "https://api.schwabapi.com/marketdata/v1/quotes";
 
 export async function loginHandler(env) {
 
@@ -84,10 +85,52 @@ export async function callbackHandler(request, env) {
 
 }
 
-export async function quoteHandler() {
+export async function quoteHandler(request, env) {
 
-    return Response.json({
-        message: "Quote endpoint coming next"
+    const url = new URL(request.url);
+
+    const symbol = url.searchParams.get("symbol");
+
+    if (!symbol) {
+
+        return Response.json({
+            error: "Missing symbol"
+        }, { status: 400 });
+
+    }
+
+    const raw = await env.HUNTER_AUTH.get("tokens");
+
+    if (!raw) {
+
+        return Response.json({
+            error: "No OAuth tokens found"
+        }, { status: 401 });
+
+    }
+
+    const tokens = JSON.parse(raw);
+
+    const response = await fetch(
+
+        `${QUOTE_URL}?symbols=${encodeURIComponent(symbol)}`,
+
+        {
+            headers: {
+                Authorization: `Bearer ${tokens.access_token}`,
+                Accept: "application/json"
+            }
+        }
+
+    );
+
+    const body = await response.text();
+
+    return new Response(body, {
+        status: response.status,
+        headers: {
+            "Content-Type": "application/json"
+        }
     });
 
 }
