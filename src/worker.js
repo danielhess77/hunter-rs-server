@@ -19,6 +19,10 @@ import {
     getWatchlistsHandler
 } from "./watchlist.js";
 
+import {
+    relativeStrengthHandler
+} from "./relativeStrength.js";
+
 export default {
 
   async fetch(request, env) {
