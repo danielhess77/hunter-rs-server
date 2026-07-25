@@ -1,68 +1,19 @@
 import {
   loginHandler,
-  callbackHandler,
-  quoteHandler
-} from "./schwab.js";
-
-export default {
-
-  async fetch(request, env) {
-
-    const url = new URL(request.url);
-
-    switch (url.pathname) {
-
-      case "/":
-        return json({
-          service: "Hunter Cloud",
-          version: "1.0.0",
-          status: "online"
-        });
-
-      case "/status":
-        return json({
-          status: "ok",
-          time: new Date().toISOString()
-        });
-
-      case "/auth/login":
-        return loginHandler(env);
-
-      case "/auth/callback":
-        return callbackHandler(request, env);
-
-      case "/quote":
-        return quoteHandler(request, env);
-
-      default:
-        return new Response("Not Found", {
-          status: 404
-        });
-
-    }
-
-  }
-
-};
-
-function json(data) {
-
-  return new Response(
-    JSON.stringify(data, null, 2),
-    {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }
-  );
-
-}
+  callbackHandler
+} from "./auth.js";
 
 import {
-  loginHandler,
-  callbackHandler,
   quoteHandler
-} from "./schwab.js";
+} from "./quotes.js";
+
+import {
+  historyHandler
+} from "./history.js";
+
+import {
+  jsonResponse
+} from "./utils.js";
 
 export default {
 
@@ -73,14 +24,14 @@ export default {
     switch (url.pathname) {
 
       case "/":
-        return json({
+        return jsonResponse({
           service: "Hunter Cloud",
           version: "1.0.0",
           status: "online"
         });
 
       case "/status":
-        return json({
+        return jsonResponse({
           status: "ok",
           time: new Date().toISOString()
         });
@@ -94,26 +45,16 @@ export default {
       case "/quote":
         return quoteHandler(request, env);
 
+      case "/history":
+        return historyHandler(request, env);
+
       default:
-        return new Response("Not Found", {
-          status: 404
-        });
+        return jsonResponse({
+          error: "Not Found"
+        }, 404);
 
     }
 
   }
 
 };
-
-function json(data) {
-
-  return new Response(
-    JSON.stringify(data, null, 2),
-    {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }
-  );
-
-}
