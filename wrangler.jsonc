@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  "name": "hunter-cloud",
+
+  "main": "src/worker.js",
+
+  "compatibility_date": "2026-07-24",
+
+  "kv_namespaces": [
+    {
+      "binding": "HUNTER_AUTH",
+      "id": "bbfecfb67165434dad0d8ef70296f33e"
+    }
+  ]
+}
