@@ -2,38 +2,33 @@ import { getHistory } from "./schwabClient.js";
 
 export async function historyHandler(request, env) {
 
-    const url = new URL(request.url);
+    try {
 
-    const symbol =
-        url.searchParams.get("symbol");
+        const url = new URL(request.url);
 
-    const period =
-        url.searchParams.get("period") || "30";
+        const symbol = url.searchParams.get("symbol");
+        const period = url.searchParams.get("period") || "30";
 
-    if (!symbol) {
-
-        return Response.json({
-            error: "Missing symbol"
-        }, {
-            status: 400
-        });
-
-    }
-
-    const response =
-        await getHistory(symbol, period, env);
-
-    return new Response(
-
-        await response.text(),
-
-        {
-            status: response.status,
-            headers: {
-                "Content-Type": "application/json"
-            }
+        if (!symbol) {
+            return Response.json({ error: "Missing symbol" }, { status: 400 });
         }
 
-    );
+        const response = await getHistory(symbol, period, env);
+
+        const text = await response.text();
+
+        return Response.json({
+            status: response.status,
+            body: text
+        });
+
+    } catch (err) {
+
+        return Response.json({
+            error: err.message,
+            stack: err.stack
+        }, { status: 500 });
+
+    }
 
 }
