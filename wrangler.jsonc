@@ -7,6 +7,10 @@
 
   "compatibility_date": "2026-07-24",
 
+  "assets": {
+    "directory": "./public"
+  },
+
   "kv_namespaces": [
     {
       "binding": "HUNTER_AUTH",
@@ -14,4 +18,3 @@
     }
   ]
 }
-

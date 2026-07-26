@@ -1,10 +1,28 @@
-const button = document.getElementById("scanButton");
-const status = document.getElementById("status");
+import { stocks } from "./sampleData.js";
 
-button.addEventListener("click", () => {
+const tableBody = document.getElementById("tableBody");
 
-    status.textContent = "Scanning...";
+function renderTable() {
 
-    console.log("Hunter scan requested.");
+    tableBody.innerHTML = "";
 
-});
+    stocks.forEach(stock => {
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${stock.ticker}</td>
+            <td>${stock.market}</td>
+            <td>${stock.qqq}</td>
+            <td>${stock.sector}</td>
+            <td>${stock.leadership}</td>
+            <td>${stock.momentum}</td>
+        `;
+
+        tableBody.appendChild(row);
+
+    });
+
+}
+
+renderTable();

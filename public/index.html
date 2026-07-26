@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hunter RS Terminal</title>
+
+    <title>Hunter Terminal</title>
 
     <link rel="stylesheet" href="styles.css">
+
 </head>
 
 <body>
 
-    <div id="app">
+    <div class="container">
 
-        <h1>Hunter RS Terminal</h1>
+        <h1>Hunter Terminal</h1>
 
-        <button id="scanButton">
-            Scan Watchlist
-        </button>
+        <div class="watchlistBar">
 
-        <p id="status">
-            Ready.
-        </p>
+            <span>Watchlist:</span>
 
-        <table id="resultsTable">
+            <strong>AI Leaders</strong>
+
+        </div>
+
+        <table id="rsTable">
 
             <thead>
 
@@ -39,7 +43,7 @@
 
             </thead>
 
-            <tbody>
+            <tbody id="tableBody">
 
             </tbody>
 
@@ -50,4 +54,5 @@
     <script type="module" src="app.js"></script>
 
 </body>
+
 </html>
