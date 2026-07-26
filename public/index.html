@@ -20,21 +20,31 @@
 
         <div class="watchlistBar">
 
-        <div>
-            <span>Watchlist:</span>
-            <strong>Growth</strong>
-        </div>
+            <div class="watchlistControl">
 
-        <div class="timeframeControl">
-            <label for="timeframeSelect">RS Timeframe:</label>
+                <label for="watchlistSelect">Watchlist:</label>
 
-            <select id="timeframeSelect">
-                <option value="1Day">1 Day</option>
-                <option value="3Day" selected>3 Day</option>
-                <option value="5Day">5 Day</option>
-                <option value="10Day">10 Day</option>
-            </select>
-        </div>
+                <select id="watchlistSelect">
+                    <option value="Growth" selected>Growth</option>
+                    <option value="Semiconductors">Semiconductors</option>
+                    <option value="Mag7">Mag 7</option>
+                    <option value="AILeaders">AI Leaders</option>
+                </select>
+
+            </div>
+
+            <div class="timeframeControl">
+
+                <label for="timeframeSelect">RS Timeframe:</label>
+
+                <select id="timeframeSelect">
+                    <option value="1Day">1 Day</option>
+                    <option value="3Day" selected>3 Day</option>
+                    <option value="5Day">5 Day</option>
+                    <option value="10Day">10 Day</option>
+                </select>
+
+            </div>
 
         </div>
 
@@ -47,8 +57,8 @@
                     <th>Ticker</th>
                     <th>Market</th>
                     <th>QQQ</th>
+                    <th>Sector RS</th>
                     <th>Sector</th>
-                    <th>Leadership</th>
                     <th>Momentum</th>
 
                 </tr>

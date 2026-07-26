@@ -1,5 +1,6 @@
 const tableBody = document.getElementById("tableBody");
 const timeframeSelect = document.getElementById("timeframeSelect");
+const watchlistSelect = document.getElementById("watchlistSelect");
 
 async function loadStocks() {
 
@@ -7,8 +8,11 @@ async function loadStocks() {
 
         const timeframe = timeframeSelect.value;
 
+        const watchlist =
+            watchlistSelect.value;
+
         const response = await fetch(
-            `/scanRS?watchlist=Growth&timeframe=${timeframe}`
+            `/scanRS?watchlist=${watchlist}&timeframe=${timeframe}`
         );
 
         if (!response.ok) {
@@ -75,7 +79,14 @@ function renderTable(stocks, timeframe) {
 
 }
 
-timeframeSelect.addEventListener("change", () => {
-    console.log("Timeframe changed:", timeframeSelect.value);
+    timeframeSelect.addEventListener(
+        "change",
+        loadStocks
+        );
+
+    watchlistSelect.addEventListener(
+        "change",
+        loadStocks
+);
+
     loadStocks();
-});
