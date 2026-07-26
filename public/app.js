@@ -75,6 +75,7 @@ function renderTable(stocks, timeframe) {
 
 }
 
-timeframeSelect.addEventListener("change", loadStocks);
-
-loadStocks();
+timeframeSelect.addEventListener("change", () => {
+    console.log("Timeframe changed:", timeframeSelect.value);
+    loadStocks();
+});
