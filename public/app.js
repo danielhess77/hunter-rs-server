@@ -34,15 +34,29 @@ function renderTable(stocks) {
 
     stocks.forEach(stock => {
 
+        const spy = stock.benchmarks?.SPY?.["3Day"]?.relativeStrength ?? 0;
+        const qqq = stock.benchmarks?.QQQ?.["3Day"]?.relativeStrength ?? 0;
+
+        const sectorName = Object.keys(stock.benchmarks)
+            .find(key => key !== "SPY" && key !== "QQQ");
+
+        const sector =
+            sectorName
+                ? stock.benchmarks[sectorName]["3Day"].relativeStrength
+                : 0;
+
+        const trend =
+            stock.momentum?.SPY?.trend ?? "-";
+
         const row = document.createElement("tr");
 
         row.innerHTML = `
-            <td>${stock.ticker}</td>
-            <td>${stock.market}</td>
-            <td>${stock.qqq}</td>
-            <td>${stock.sector}</td>
-            <td>${stock.leadership}</td>
-            <td>${stock.momentum}</td>
+            <td>${stock.symbol}</td>
+            <td>${spy.toFixed(2)}</td>
+            <td>${qqq.toFixed(2)}</td>
+            <td>${sector.toFixed(2)}</td>
+            <td>${sectorName ?? "-"}</td>
+            <td>${trend}</td>
         `;
 
         tableBody.appendChild(row);
