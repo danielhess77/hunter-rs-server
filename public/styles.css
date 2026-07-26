@@ -5,85 +5,97 @@
 }
 
 body {
-
     background: #0f172a;
     color: #f8fafc;
-
     font-family: Arial, Helvetica, sans-serif;
-
     padding: 30px;
 }
 
 .container {
-
     max-width: 1200px;
     margin: auto;
-
 }
 
 h1 {
-
     font-size: 32px;
     margin-bottom: 25px;
-
 }
+
+/* ===========================
+   Top Controls
+=========================== */
 
 .watchlistBar {
-
     background: #1e293b;
-
     padding: 14px 18px;
-
     border-radius: 8px;
-
     margin-bottom: 25px;
 
-    font-size: 18px;
-
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
+.watchlistBar label {
+    font-weight: bold;
+    margin-right: 6px;
+}
+
+.watchlistBar select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    background: #334155;
+    color: white;
+}
+
+.managerControl {
+    margin-left: auto;
+}
+
+#manageWatchlists {
+    padding: 9px 16px;
+    background: #334155;
+    color: white;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+#manageWatchlists:hover {
+    background: #475569;
+}
+
+/* ===========================
+   Table
+=========================== */
+
 table {
-
     width: 100%;
-
     border-collapse: collapse;
-
     background: #1e293b;
-
     border-radius: 8px;
-
     overflow: hidden;
-
 }
 
 thead {
-
     background: #334155;
-
 }
 
 th {
-
     padding: 16px;
-
     text-align: left;
-
     font-size: 15px;
-
 }
 
 td {
-
     padding: 16px;
-
     border-top: 1px solid #334155;
-
 }
 
 tbody tr:hover {
-
     background: #273449;
-
     cursor: pointer;
-
 }

@@ -1,6 +1,7 @@
 const tableBody = document.getElementById("tableBody");
 const timeframeSelect = document.getElementById("timeframeSelect");
 const watchlistSelect = document.getElementById("watchlistSelect");
+const manageButton = document.getElementById("manageWatchlists");
 
 async function loadStocks() {
 
@@ -88,5 +89,11 @@ function renderTable(stocks, timeframe) {
         "change",
         loadStocks
 );
+
+    manageButton.addEventListener("click", () => {
+
+        alert("Watchlist Manager coming next.");
+
+});
 
     loadStocks();
