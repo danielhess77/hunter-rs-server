@@ -3,7 +3,7 @@ const tableBody = document.getElementById("tableBody");
 async function loadStocks() {
     try {
 
-        const response = await fetch("/scanRS");
+        const response = await fetch("/scanRS?watchlist=Growth");
 
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
