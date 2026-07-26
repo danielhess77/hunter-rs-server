@@ -16,6 +16,9 @@ export async function scanRSHandler(request, env) {
     const watchlistName =
         url.searchParams.get("watchlist");
 
+    const timeframe =
+        url.searchParams.get("timeframe") ?? "3Day";
+
     const symbols =
         watchlists[watchlistName];
 
@@ -80,15 +83,17 @@ export async function scanRSHandler(request, env) {
     // Sort by SPY 5-Day RS
     //
 
-    results.sort(
+    results.sort((a, b) => {
 
-        (a, b) =>
+        const aRS =
+        a.benchmarks?.SPY?.[timeframe]?.relativeStrength ?? 0;
 
-            b.benchmarks.SPY["5Day"].relativeStrength -
+        const bRS =
+        b.benchmarks?.SPY?.[timeframe]?.relativeStrength ?? 0;
 
-            a.benchmarks.SPY["5Day"].relativeStrength
+        return bRS - aRS;
 
-    );
+});
 
     return Response.json(results);
 
