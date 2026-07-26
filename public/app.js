@@ -1,9 +1,15 @@
 const tableBody = document.getElementById("tableBody");
+const timeframeSelect = document.getElementById("timeframeSelect");
 
 async function loadStocks() {
+
     try {
 
-        const response = await fetch("/scanRS?watchlist=Growth");
+        const timeframe = timeframeSelect.value;
+
+        const response = await fetch(
+            `/scanRS?watchlist=Growth&timeframe=${timeframe}`
+        );
 
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
@@ -11,7 +17,7 @@ async function loadStocks() {
 
         const stocks = await response.json();
 
-        renderTable(stocks);
+        renderTable(stocks, timeframe);
 
     } catch (err) {
 
@@ -26,23 +32,27 @@ async function loadStocks() {
         `;
 
     }
+
 }
 
-function renderTable(stocks) {
+function renderTable(stocks, timeframe) {
 
     tableBody.innerHTML = "";
 
     stocks.forEach(stock => {
 
-        const spy = stock.benchmarks?.SPY?.["3Day"]?.relativeStrength ?? 0;
-        const qqq = stock.benchmarks?.QQQ?.["3Day"]?.relativeStrength ?? 0;
+        const spy =
+            stock.benchmarks?.SPY?.[timeframe]?.relativeStrength ?? 0;
+
+        const qqq =
+            stock.benchmarks?.QQQ?.[timeframe]?.relativeStrength ?? 0;
 
         const sectorName = Object.keys(stock.benchmarks)
             .find(key => key !== "SPY" && key !== "QQQ");
 
         const sector =
             sectorName
-                ? stock.benchmarks[sectorName]["3Day"].relativeStrength
+                ? stock.benchmarks?.[sectorName]?.[timeframe]?.relativeStrength ?? 0
                 : 0;
 
         const trend =
@@ -64,5 +74,7 @@ function renderTable(stocks) {
     });
 
 }
+
+timeframeSelect.addEventListener("change", loadStocks);
 
 loadStocks();
