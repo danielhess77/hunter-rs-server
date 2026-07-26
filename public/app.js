@@ -82,7 +82,7 @@ function renderTable(stocks, timeframe) {
     timeframeSelect.addEventListener(
         "change",
         loadStocks
-        );
+);
 
     watchlistSelect.addEventListener(
         "change",
