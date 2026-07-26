@@ -1,8 +1,34 @@
-import { stocks } from "./sampleData.js";
-
 const tableBody = document.getElementById("tableBody");
 
-function renderTable() {
+async function loadStocks() {
+    try {
+
+        const response = await fetch("/scanRS");
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const stocks = await response.json();
+
+        renderTable(stocks);
+
+    } catch (err) {
+
+        console.error(err);
+
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    Failed to load Hunter scan.
+                </td>
+            </tr>
+        `;
+
+    }
+}
+
+function renderTable(stocks) {
 
     tableBody.innerHTML = "";
 
@@ -25,4 +51,4 @@ function renderTable() {
 
 }
 
-renderTable();
+loadStocks();
