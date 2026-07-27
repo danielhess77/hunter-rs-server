@@ -81,6 +81,8 @@ export async function scanRSHandler(request, env) {
     const results =
         await Promise.all(promises);
 
+    return Response.json(results[0]);
+
     //
     // Sort by SPY 5-Day RS
     //
