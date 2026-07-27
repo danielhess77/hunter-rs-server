@@ -60,8 +60,9 @@ export async function scanRSHandler(request, env) {
     const benchmarks =
         await getBenchmarks(
             benchmarkList,
-            env
-        );
+            env,
+            timeframe
+    );
 
     //
     // Calculate RS in parallel
@@ -72,8 +73,9 @@ export async function scanRSHandler(request, env) {
             calculateRelativeStrength(
                 symbol,
                 env,
-                benchmarks
-            )
+                benchmarks,
+                timeframe
+    )
         );
 
     const results =

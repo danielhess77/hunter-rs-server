@@ -138,15 +138,29 @@ export async function authorizedFetch(url, env) {
 
 }
 
-export async function getHistory(symbol, env) {
+export async function getHistory(symbol, env, timeframe = "3Day") {
+
+    let periodType = "year";
+    let period = 1;
+    let frequencyType = "daily";
+    let frequency = 1;
+
+    if (timeframe === "Today") {
+
+        periodType = "day";
+        period = 1;
+        frequencyType = "minute";
+        frequency = 30;
+
+    }
 
     const url =
         `https://api.schwabapi.com/marketdata/v1/pricehistory` +
         `?symbol=${encodeURIComponent(symbol)}` +
-        `&periodType=year` +
-        `&period=1` +
-        `&frequencyType=daily` +
-        `&frequency=1`;
+        `&periodType=${periodType}` +
+        `&period=${period}` +
+        `&frequencyType=${frequencyType}` +
+        `&frequency=${frequency}`;
 
     return authorizedFetch(url, env);
 

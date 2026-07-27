@@ -60,7 +60,7 @@ function buildBenchmarkResult(
     benchmarkCandles
 ) {
 
-    return {
+    const output = {
 
         "3Day": calculatePeriod(
             stockCandles,
@@ -82,20 +82,70 @@ function buildBenchmarkResult(
 
     };
 
+    //
+    // Today's Relative Strength
+    //
+
+    if (
+        stockCandles.length > 1 &&
+        benchmarkCandles.length > 1
+    ) {
+
+        const stockOpen =
+            stockCandles[0].open;
+
+        const stockCurrent =
+            stockCandles.at(-1).close;
+
+        const benchmarkOpen =
+            benchmarkCandles[0].open;
+
+        const benchmarkCurrent =
+            benchmarkCandles.at(-1).close;
+
+        const stockReturn =
+            percentChange(
+                stockCurrent,
+                stockOpen
+            );
+
+        const benchmarkReturn =
+            percentChange(
+                benchmarkCurrent,
+                benchmarkOpen
+            );
+
+        output.Today = {
+
+            stockReturn,
+
+            benchmarkReturn,
+
+            relativeStrength:
+                stockReturn -
+                benchmarkReturn
+
+        };
+
+    }
+
+    return output;
+
 }
 
 export async function calculateRelativeStrength(
     symbol,
     env,
-    benchmarks
+    benchmarks,
+    timeframe = "3Day"
 ) {
 
     const response =
-        await getHistory(
-            symbol,
-            env
-        );
-
+    await getHistory(
+        symbol,
+        env,
+        timeframe
+    );
     const stock =
         await response.json();
 
