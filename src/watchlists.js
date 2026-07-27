@@ -12,6 +12,18 @@ export const watchlists = {
     ],
 
     CurrentWatch: [
+        "AMZN",
+        "BE",
+        "IONQ",
+        "NBIS",
+        "ORCL",
+        "PLTR",
+        "RUN",
+        "SNPS",
+        "SOFI",
+        "TSLA",
+        "VST",
+        "WULF",
 
 ],
 
