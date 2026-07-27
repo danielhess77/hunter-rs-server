@@ -29,14 +29,14 @@ async function loadStocks() {
         console.error(err);
 
         tableBody.innerHTML = `
-            <tr>
-                <td colspan="6">
-                    Failed to load Hunter scan.
-                </td>
-            </tr>
-        `;
+        <tr>
+            <td colspan="6">
+                ${err.message}
+            </td>
+        </tr>
+    `;
 
-    }
+}
 
 }
 
