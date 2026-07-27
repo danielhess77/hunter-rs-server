@@ -11,4 +11,8 @@ export const watchlists = {
         "TSLA"
     ]
 
+    CurrentWatch: [
+
+],
+
 };
