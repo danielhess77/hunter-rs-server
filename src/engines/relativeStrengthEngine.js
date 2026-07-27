@@ -3,24 +3,14 @@ import { sectorMap } from "../sectors.js";
 import { calculateRSMomentum } from "./rsMomentumEngine.js";
 
 function percentChange(current, previous) {
-
     return ((current - previous) / previous) * 100;
-
 }
 
 function calculateReturn(candles, days) {
+    const current = candles.at(-1).close;
+    const previous = candles.at(-(days + 1)).close;
 
-    const current =
-        candles.at(-1).close;
-
-    const previous =
-        candles.at(-(days + 1)).close;
-
-    return percentChange(
-        current,
-        previous
-    );
-
+    return percentChange(current, previous);
 }
 
 function calculatePeriod(
@@ -28,39 +18,35 @@ function calculatePeriod(
     benchmarkCandles,
     days
 ) {
+    const stockReturn = calculateReturn(
+        stockCandles,
+        days
+    );
 
-    const stockReturn =
-        calculateReturn(
-            stockCandles,
-            days
-        );
-
-    const benchmarkReturn =
-        calculateReturn(
-            benchmarkCandles,
-            days
-        );
+    const benchmarkReturn = calculateReturn(
+        benchmarkCandles,
+        days
+    );
 
     return {
-
         stockReturn,
-
         benchmarkReturn,
-
         relativeStrength:
-            stockReturn -
-            benchmarkReturn
-
+            stockReturn - benchmarkReturn
     };
-
 }
 
 function buildBenchmarkResult(
     stockCandles,
     benchmarkCandles
 ) {
-
     const output = {
+
+        "1Day": calculatePeriod(
+            stockCandles,
+            benchmarkCandles,
+            1
+        ),
 
         "3Day": calculatePeriod(
             stockCandles,
@@ -130,7 +116,6 @@ function buildBenchmarkResult(
     }
 
     return output;
-
 }
 
 export async function calculateRelativeStrength(
@@ -141,11 +126,12 @@ export async function calculateRelativeStrength(
 ) {
 
     const response =
-    await getHistory(
-        symbol,
-        env,
-        timeframe
-    );
+        await getHistory(
+            symbol,
+            env,
+            timeframe
+        );
+
     const stock =
         await response.json();
 
@@ -198,10 +184,9 @@ export async function calculateRelativeStrength(
     }
 
     output.momentum =
-    calculateRSMomentum(
-        output.benchmarks
-    );
-    
-    return output;
+        calculateRSMomentum(
+            output.benchmarks
+        );
 
+    return output;
 }
